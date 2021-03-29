@@ -1,0 +1,12 @@
+@startuml
+
+ServerHttpSecurity -> resourceServer: #configure 
+resourceServer -> jwt: configure 配置jwt
+jwt -> jwt: 创建AuthenticationWebFilter
+note left
+使用JwtReactiveAuthenticationManager管理器
+使用JwtDecoder来解析token为Jwt
+使用JwtAuthenticationConverter解析Jwt为Authentication 
+end note
+
+@enduml

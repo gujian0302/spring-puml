@@ -1,0 +1,51 @@
+@startuml
+autoactivate on
+Actor -> PrePostAdviceReactiveMethodInterceptor: invoke
+PrePostAdviceReactiveMethodInterceptor ->  MethodSecurityMetadataSource: getAttributes
+note left
+获取类方法上面
+的注解的元数据信息
+endnote
+return
+PrePostAdviceReactiveMethodInterceptor -> PrePostAdviceReactiveMethodInterceptor: findPrevInvocationAttribute 
+note left 
+通过获取的数据数据信息过滤出前置参数
+endnote
+return
+PrePostAdviceReactiveMethodInterceptor -> ReactiveSecurityContextHolder: getContext
+note left
+获取上下文
+endnote
+ReactiveSecurityContextHolder -> Mono: map
+note left: 转换为Authentication
+Mono -> Mono: defaultIfEmpty
+return
+note left: 匿名默认值
+Mono -> PreInvocationAuthorizationAdvice: before 
+return
+note left: 执行前置切面
+Mono -> switchIfEmtpy:
+return
+note left 
+如果没有符合条件的元素，
+意味着没有过权限校验，
+抛出访问被拒绝异常
+endnote
+return
+PrePostAdviceReactiveMethodInterceptor  -> PrePostAdviceReactiveMethodInterceptor:  findPostInvocationAttribute
+note left
+查找后置配置参数
+endnote
+return
+PrePostAdviceReactiveMethodInterceptor -> PrePostAdviceReactiveMethodInterceptor: proceed
+note left: 执行方法
+return
+PrePostAdviceReactiveMethodInterceptor -> PostInvocationAuthorizationAdvice: after
+note left
+执行后置权限校验
+endnote
+return 
+return
+return
+
+@enduml

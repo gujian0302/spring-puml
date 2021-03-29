@@ -1,0 +1,12 @@
+@startuml
+
+autoactivate on
+JwtReactiveAuthenticationManager -> JwtReactiveAuthenticationManager : authenticate
+JwtReactiveAuthenticationManager -> BearerTokenAuthenticationToken:getToken
+return
+JwtReactiveAuthenticationManager -> JwtDecoder: decode
+return Jwt
+JwtReactiveAuthenticationManager  -> JwtAuthenticationConverter: convert
+return Authentication
+return 
+@endul

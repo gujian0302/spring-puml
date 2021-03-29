@@ -1,0 +1,22 @@
+@startuml
+
+autoactivate on
+Actor -> ExpressionBasedPostInvocationAdvice: after
+ExpressionBasedPostInvocationAdvice -> MethodSecurityExpressionHandler: createEvaluationContext
+return EvaluationContext
+ExpressionBasedPostInvocationAdvice -> PostInvocationAttribute: getFilterExpression
+ExpressionBasedPostInvocationAdvice -> PostInvocationAttribute: getAuthorizeExpression 
+return 
+return
+ExpressionBasedPostInvocationAdvice -> MethodSecurityExpressionHandler: filter
+return
+ExpressionBasedPostInvocationAdvice -> ExpressionUtils:evaluateAsBoolean
+return true/false
+
+alt 没有通过权限校验
+ExpressionBasedPostInvocationAdvice  -> AccessDeniedException: 抛出异常
+end
+return
+
+
+@enduml

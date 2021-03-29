@@ -1,0 +1,7 @@
+@startuml
+Actor -> DefaultMethodSecurityExpressionHandler: filter
+ExpressionBasedPostInvocationAdvice ->ExpressionBasedPostInvocationAdvice: filterCollection 
+ExpressionBasedPostInvocationAdvice -> ExpressionUtils: evaluateAsBoolean
+return
+
+@enduml

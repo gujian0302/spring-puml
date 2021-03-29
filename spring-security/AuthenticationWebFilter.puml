@@ -1,0 +1,25 @@
+@startuml
+autoactivate on
+SpringSecurityFilterChain -> AuthenticationWebFilter: filter 
+AuthenticationWebFilter -> requiresAuthenticationMatcher: 检查是否匹配请求
+return
+AuthenticationWebFilter -> authenticationConverter: convert 
+note left
+将token从http中解析出来:
+实现有ServerBearerTokenAuthenticationConverter
+endnote
+return
+AuthenticationWebFilter -> AuthenticationWebFilter: switchIfEmpty
+note left
+如果结果为空，继续执行过滤器链
+endnote
+return
+AuthenticationWebFilter  -> AuthenticationManger: authenticate
+note left
+使用认证管理器对token进行认证，并生成Authentication 
+AuthenticationManager实现: JwtReactiveAuthenticationManager
+endnote
+return
+return
+
+@enduml

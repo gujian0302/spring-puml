@@ -1,0 +1,29 @@
+@startuml
+
+|Frontend|
+start
+:换取jsCode;
+|server|
+:发起jsCode换取用户信息,session_key;
+|wechatServer|
+:返回openId, unionId(可能为空);
+|server|
+fork
+  :存储openId与session_key关系到redis;
+fork again
+  if (unionId 存在) then
+    fork
+      :DB根据openId查找unionId;
+    fork again
+      :DB根据unionId查找userId;
+      :DB根据userId查找手机号;
+    end fork
+  else
+    :DB根据openId查找unionId;
+    :DB根据unionId查找userId;
+    :DB根据userId查找mobile;
+  endif
+  :根据信息生成Token;
+end fork
+stop
+@enduml

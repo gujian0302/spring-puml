@@ -1,0 +1,40 @@
+@startuml
+
+class PostInvocationExpressionAttribute extends AbstractExpressionBasedMethodConfigAttribute implements PostInvocationAttribute {}
+
+class PreInvocationExpressionAttribute extends AbstractExpressionBasedMethodConfigAttribute implements PreInvocationAttribute{
+  filterTarget: String
+}
+
+abstract class AbstractExpressionBasedMethodConfigAttribute implements ConfigAttribute {
+  filterExpression: Expression
+  authroizeExpression: Expression
+}
+
+interface PreInvocationAttribute extends ConfigAttribute {
+
+}
+
+interface PostInvocationAttribute extends ConfigAttribute {
+
+}
+
+interface MethodSecurityMetadataSource {
+  getAttributes(Method method, Class<?> target): Collection<ConfigAttribute>
+}
+  
+abstract class AbstractMethodSecurityMetadataSource implements MethodSecurityMetadataSource {
+  getAttributes(Object object): Collection<ConfigAttribute>
+}
+
+class PrePostAnnotationSecurityMetadatSource extends AbstractMethodSecurityMetadataSource {
+
+}
+
+class Jsr250MethodSecurityMetadatSource extends AbstractMethodSecurityMetadataSource {
+
+}
+
+
+
+@enduml

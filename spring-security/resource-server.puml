@@ -1,0 +1,15 @@
+@startuml
+
+class ReactiveOAuth2ResourceServerAutoConfiguration {
+}
+
+class ReactiveSecurityAutoConfiguration {
+
+}
+
+class ReactiveOAuth2ResourceServerConfiguration.JwtConfiguration {
+
+}
+
+
+@enduml
